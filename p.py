@@ -1,6 +1,6 @@
 import re
 import sys
-s = bytes.hex(b"Hello, World") 
+s = bytes.hex(b"Hello, World!\n") 
 cs = re.findall('..', s)
 for c in cs:
     b = str(bin(int(c, 16)))[2:]
