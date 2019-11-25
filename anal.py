@@ -14,7 +14,7 @@ def getFileText(path):
 def rmCommentsSpacing(unparsed):
   noComments = re.sub(r'#.*', '', unparsed)
   # print(noComments)
-  return re.sub(r'[^1Ii\|l\[\]]', '', noComments)
+  return re.sub(r'[^1Ii!\|l\[\]]', '', noComments)
 
 def parse1s0s(l1str):
   binStr = ""
@@ -28,8 +28,8 @@ def parse1s0s(l1str):
 
 def findLastI(l, i, c):
   for x in range(len(l)):
-    if l[x] == c and x < i:
-      return x
+    if l[len(l) - x - 1] == c and len(l) - x - 1 < i:
+      return len(l) - x - 1
   return 0
 
 def parseCleaned(cleanedStr):
@@ -45,12 +45,14 @@ def parseCleaned(cleanedStr):
     elif c == "]":
       currFuncStr = ''.join(l[findLastI(l, i, "]"):i]).replace("[", "")
     elif c == "I":
-      print(chr(currVarInt))
+      sys.stdout.write(chr(currVarInt))
     elif c == "i":
       parseCleaned(currFuncStr)
     elif c == "|":
-      if currVarInt == pastVarInt:
+      if currVarInt != pastVarInt:
         parseCleaned(currFuncStr)
+    elif c == "!":
+        print(cleanedStr)
     elif c != "1" and c != "l":
       print(f"error parsing char {c}")
       sys.exit(1)
